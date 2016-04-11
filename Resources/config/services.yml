@@ -1,0 +1,5 @@
+services:
+  app.twig_extension:
+        class: Xtuc\BootstrapTwigBundle\Twig\BootstrapExtension
+        tags:
+            - { name: twig.extension }
