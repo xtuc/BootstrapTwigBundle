@@ -2,6 +2,7 @@
 
 namespace Xtuc\BootstrapTwigBundle\Twig;
 
+use \Xtuc\BootstrapTwigBundle\Twig\Components\Pager;
 use \Xtuc\BootstrapTwigBundle\Twig\Components\Grid\Grid;
 use \Xtuc\BootstrapTwigBundle\Twig\Components\Grid\Row;
 use \Xtuc\BootstrapTwigBundle\Twig\Components\Grid\Container;
@@ -20,12 +21,13 @@ class BootstrapExtension extends \Twig_Extension
             "Btn" => new \Xtuc\BootstrapTwigBundle\Twig\Components\Btn,
             "Label" => new \Xtuc\BootstrapTwigBundle\Twig\Components\Label,
             "Alert" => new \Xtuc\BootstrapTwigBundle\Twig\Components\Alert,
+            "Pager" => new \Xtuc\BootstrapTwigBundle\Twig\Components\PagerElements,
         ];
     }
 
     public function getTokenParsers()
     {
-        return [ new Col, new Row, new Container ];
+        return [ new Col, new Row, new Container, new Pager ];
     }
 
     public function getFunctions()
