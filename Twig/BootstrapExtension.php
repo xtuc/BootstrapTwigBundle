@@ -12,6 +12,10 @@ use \Xtuc\BootstrapTwigBundle\Twig\Components\Grid\Options\Sm;
 use \Xtuc\BootstrapTwigBundle\Twig\Components\Grid\Options\Xs;
 use \Xtuc\BootstrapTwigBundle\Twig\Components\Grid\Options\Lg;
 use \Xtuc\BootstrapTwigBundle\Twig\Components\Grid\Options\OptionInterface;
+use \Xtuc\BootstrapTwigBundle\Twig\Components\ProgressBar;
+use \Xtuc\BootstrapTwigBundle\Twig\Values\Min;
+use \Xtuc\BootstrapTwigBundle\Twig\Values\Max;
+use \Xtuc\BootstrapTwigBundle\Twig\Values\Now;
 
 class BootstrapExtension extends \Twig_Extension
 {
@@ -22,6 +26,7 @@ class BootstrapExtension extends \Twig_Extension
             "Label" => new \Xtuc\BootstrapTwigBundle\Twig\Components\Label,
             "Alert" => new \Xtuc\BootstrapTwigBundle\Twig\Components\Alert,
             "Pager" => new \Xtuc\BootstrapTwigBundle\Twig\Components\PagerElements,
+            "ProgressBar" => new \Xtuc\BootstrapTwigBundle\Twig\Components\ProgressBar,
         ];
     }
 
@@ -44,12 +49,29 @@ class BootstrapExtension extends \Twig_Extension
             new \Twig_SimpleFunction("Strong", array($this, "strong"), [ "is_safe" => [ "html" ] ]),
             new \Twig_SimpleFunction("Small", array($this, "small"), [ "is_safe" => [ "html" ] ]),
             new \Twig_SimpleFunction("PageHeader", array($this, "pageHeader"), [ "is_safe" => [ "html" ] ]),
+            new \Twig_SimpleFunction("ProgressBar", array($this, "progressBar"), [ "is_safe" => [ "html" ] ]),
+            new \Twig_SimpleFunction("Min", array(new Min, "factory")),
+            new \Twig_SimpleFunction("Max", array(new Max, "factory")),
+            new \Twig_SimpleFunction("Now", array(new Now, "factory")),
         );
     }
 
     public function badge($value = "")
     {
         return sprintf("<span class=\"badge\">%s</span>", $value);
+    }
+
+    public function progressBar(...$args)
+    {
+        $str = ProgressBar::START;
+
+        foreach ($args as $progressBar) {
+            $str .= $progressBar->render(false);
+        }
+
+        $str .= ProgressBar::END;
+
+        return $str;
     }
 
     public function strong($value = "")
