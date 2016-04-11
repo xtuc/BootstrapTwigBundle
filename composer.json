@@ -1,6 +1,7 @@
 {
     "name": "Xtuc/BootstrapTwigBundle",
     "version": "0.1.0",
+    "type": "symfony-bundle",
     "autoload": {
         "psr-4": { "Xtuc\\BootstrapTwigBundle\\": "" }
     }
