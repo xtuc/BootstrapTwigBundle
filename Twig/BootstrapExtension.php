@@ -14,9 +14,12 @@ use \Xtuc\BootstrapTwigBundle\Twig\Components\Grid\Options\Xs;
 use \Xtuc\BootstrapTwigBundle\Twig\Components\Grid\Options\Lg;
 use \Xtuc\BootstrapTwigBundle\Twig\Components\Grid\Options\OptionInterface;
 use \Xtuc\BootstrapTwigBundle\Twig\Components\ProgressBar;
+
+use \Xtuc\BootstrapTwigBundle\Twig\Values\Type;
 use \Xtuc\BootstrapTwigBundle\Twig\Values\Min;
 use \Xtuc\BootstrapTwigBundle\Twig\Values\Max;
 use \Xtuc\BootstrapTwigBundle\Twig\Values\Now;
+use \Xtuc\BootstrapTwigBundle\Twig\Values\LinkTo;
 
 use \Xtuc\BootstrapTwigBundle\Services\DOMBuilder;
 use \Xtuc\BootstrapTwigBundle\Services\AbstractBootstrapDOMNode;
@@ -64,6 +67,8 @@ class BootstrapExtension extends \Twig_Extension
             new \Twig_SimpleFunction("Min", array(new Min, "factory")),
             new \Twig_SimpleFunction("Max", array(new Max, "factory")),
             new \Twig_SimpleFunction("Now", array(new Now, "factory")),
+            new \Twig_SimpleFunction("Type", array(new Type, "factory")),
+            new \Twig_SimpleFunction("LinkTo", array(new LinkTo, "factory")),
         );
     }
 
@@ -115,9 +120,9 @@ class BootstrapExtension extends \Twig_Extension
         return $this->components["Label"]->_default($content);
     }
 
-    public function btn($content = "")
+    public function btn()
     {
-        return $this->components["Btn"]->_default($content);
+        return $this->components["Btn"]->factory(...func_get_args());
     }
 
     public function getName()
