@@ -58,14 +58,4 @@ abstract class AbstractBootstrapDOMNode
     {
         return $this->render();
     }
-
-    // public function render($type, $content)
-    // {
-    //     return (new DOMBuilder)
-    //                         ->setTag($this->tag)
-    //                         ->setContent($content)
-    //                         ->setAttribute("class", "alert alert-" . $type)
-    //                         ->setAttribute("role", "alert")
-    //                         ->compile();
-    // }
 }
