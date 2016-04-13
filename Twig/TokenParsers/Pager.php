@@ -1,6 +1,6 @@
 <?php
 
-namespace Xtuc\BootstrapTwigBundle\Twig\Components;
+namespace Xtuc\BootstrapTwigBundle\Twig\TokenParsers;
 
 class Pager extends \Twig_TokenParser
 {

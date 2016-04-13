@@ -1,8 +1,8 @@
 <?php
 
-namespace Xtuc\BootstrapTwigBundle\Twig\Components\Grid;
+namespace Xtuc\BootstrapTwigBundle\Twig\TokenParsers\Grid;
 
-class Container extends \Twig_TokenParser
+class Row extends \Twig_TokenParser
 {
     /**
      * {@inheritdoc}
@@ -16,7 +16,7 @@ class Container extends \Twig_TokenParser
         $nodes = $this->parser->subparse(array($this, 'decideEnd'), true);
         $stream->expect(\Twig_Token::BLOCK_END_TYPE);
 
-        $headNode = new \Twig_Node_Text("<div class=\"container\">", $lineno);
+        $headNode = new \Twig_Node_Text("<div class=\"row\">", $lineno);
         $footerNode = new \Twig_Node_Text("</div>", $lineno);
 
         return new \Twig_Node(array("head" => $headNode, 'body' => $nodes, "footer" => $footerNode), array(), $lineno, $this->getTag());
@@ -32,6 +32,6 @@ class Container extends \Twig_TokenParser
      */
     public function getTag()
     {
-        return 'container';
+        return 'row';
     }
 }

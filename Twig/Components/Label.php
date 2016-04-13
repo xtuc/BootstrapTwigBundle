@@ -2,45 +2,17 @@
 
 namespace Xtuc\BootstrapTwigBundle\Twig\Components;
 
-class Label
+use \Xtuc\BootstrapTwigBundle\Services\AbstractBootstrapDOMNode;
+use \Xtuc\BootstrapTwigBundle\Services\DOMBuilder;
+
+class Label extends AbstractBootstrapDOMNode
 {
-    public static function _default($content = "")
+    public function render($content)
     {
-        return sprintf("<span class=\"label label-%s\">%s</span>", "default", $content);
-    }
-
-    public function info($content = "")
-    {
-        return $this->render("info", $content);
-    }
-
-    public function primary($content = "")
-    {
-        return $this->render("primary", $content);
-    }
-
-    public function success($content = "")
-    {
-        return $this->render("success", $content);
-    }
-
-    public function warning($content = "")
-    {
-        return $this->render("warning", $content);
-    }
-
-    public function danger($content = "")
-    {
-        return $this->render("danger", $content);
-    }
-
-    public function link($content = "")
-    {
-        return $this->render("link", $content);
-    }
-
-    private function render($type, $content = "")
-    {
-        return sprintf("<span class=\"label label-%s\">%s</span>", $type, $content);
+        return (new DOMBuilder)
+                            ->setTag(self::SPAN)
+                            ->setContent($content)
+                            ->setAttribute("class", "label label-" . $this->type)
+                            ->compile();
     }
 }

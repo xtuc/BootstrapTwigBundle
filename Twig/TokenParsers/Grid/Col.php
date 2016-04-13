@@ -1,6 +1,6 @@
 <?php
 
-namespace Xtuc\BootstrapTwigBundle\Twig\Components\Grid;
+namespace Xtuc\BootstrapTwigBundle\Twig\TokenParsers\Grid;
 
 class Col extends \Twig_TokenParser
 {

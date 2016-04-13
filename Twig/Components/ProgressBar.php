@@ -6,11 +6,11 @@ use \Xtuc\BootstrapTwigBundle\Twig\Values\Now;
 use \Xtuc\BootstrapTwigBundle\Twig\Values\Min;
 use \Xtuc\BootstrapTwigBundle\Twig\Values\Max;
 
-class ProgressBar
-{
-    const START = "<div class=\"progress\">";
-    const END = "</div>";
+use \Xtuc\BootstrapTwigBundle\Services\DOMBuilder;
+use \Xtuc\BootstrapTwigBundle\Services\AbstractBootstrapDOMNode;
 
+class ProgressBar extends AbstractBootstrapDOMNode
+{
     /**
      * [$type description]
      * @var String
@@ -77,23 +77,44 @@ class ProgressBar
         return (new self)->factory(__FUNCTION__, ...func_get_args());
     }
 
+    public static function renderContainer()
+    {
+        return (new DOMBuilder)
+                            ->setTag(self::DIV)
+                            ->setAttribute("class", "progress");
+    }
+
     public function render($root = true)
     {
-        return sprintf("%s<div class=\"progress-bar progress-bar-%s\" role=\"progressbar\" aria-valuenow=\"%s\" %s %s style=\"width: %s%%\"><span class=\"sr-only\">%s %% complete (%s)</span></div>%s",
-            ($root) ? self::START : "",
-            $this->type,
-            $this->valueNow,
-            ($this->valueMin) ? "aria-valuemin=\"" . $this->valueMin . "\"" : null,
-            ($this->valueMax) ? "aria-valuemax=\"" . $this->valueMax . "\"" : null,
-            $this->valueNow,
-            $this->valueNow,
-            $this->type,
-            ($root) ? self::END : ""
-        );
+        $container = self::renderContainer();
+
+        $element = (new DOMBuilder)
+                            ->setTag(self::DIV)
+                            ->setAttribute("class", "progress-bar progress-bar-" . $this->type)
+                            ->setAttribute("role", "progressbar")
+                            ->setAttribute("style", "width:". $this->valueNow ."%;")
+                            ->setAttribute("aria-valuenow", $this->valueNow)
+                            ->setContent("<span class=\"sr-only\">%s %% complete (%s)</span>");
+
+        if ($this->valueMin) {
+            $element->setAttribute("aria-valuemin", $this->valueMin);
+        }
+
+        if ($this->valueMax) {
+            $element->setAttribute("aria-valuemax", $this->valueMax);
+        }
+
+        if ($root) {
+            return $container
+                            ->addChild($element)
+                            ->compile();
+        }
+
+        return $element->compile();
     }
 
     public function __toString()
     {
-        return $this->render();
+        return $this->render()->__toString();
     }
 }

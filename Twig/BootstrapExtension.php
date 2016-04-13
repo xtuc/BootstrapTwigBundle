@@ -2,11 +2,12 @@
 
 namespace Xtuc\BootstrapTwigBundle\Twig;
 
-use \Xtuc\BootstrapTwigBundle\Twig\Components\Pager;
+use \Xtuc\BootstrapTwigBundle\Twig\TokenParsers\Pager;
+use \Xtuc\BootstrapTwigBundle\Twig\TokenParsers\Grid\Row;
+use \Xtuc\BootstrapTwigBundle\Twig\TokenParsers\Grid\Container;
+use \Xtuc\BootstrapTwigBundle\Twig\TokenParsers\Grid\Col;
+
 use \Xtuc\BootstrapTwigBundle\Twig\Components\Grid\Grid;
-use \Xtuc\BootstrapTwigBundle\Twig\Components\Grid\Row;
-use \Xtuc\BootstrapTwigBundle\Twig\Components\Grid\Container;
-use \Xtuc\BootstrapTwigBundle\Twig\Components\Grid\Col;
 use \Xtuc\BootstrapTwigBundle\Twig\Components\Grid\Options\Md;
 use \Xtuc\BootstrapTwigBundle\Twig\Components\Grid\Options\Sm;
 use \Xtuc\BootstrapTwigBundle\Twig\Components\Grid\Options\Xs;
@@ -17,22 +18,32 @@ use \Xtuc\BootstrapTwigBundle\Twig\Values\Min;
 use \Xtuc\BootstrapTwigBundle\Twig\Values\Max;
 use \Xtuc\BootstrapTwigBundle\Twig\Values\Now;
 
+use \Xtuc\BootstrapTwigBundle\Services\DOMBuilder;
+use \Xtuc\BootstrapTwigBundle\Services\AbstractBootstrapDOMNode;
+
 class BootstrapExtension extends \Twig_Extension
 {
-    public function getGlobals()
+    public function __construct()
     {
-        return [
+        $this->components = [
             "Btn" => new \Xtuc\BootstrapTwigBundle\Twig\Components\Btn,
             "Label" => new \Xtuc\BootstrapTwigBundle\Twig\Components\Label,
             "Alert" => new \Xtuc\BootstrapTwigBundle\Twig\Components\Alert,
             "Pager" => new \Xtuc\BootstrapTwigBundle\Twig\Components\PagerElements,
-            "ProgressBar" => new \Xtuc\BootstrapTwigBundle\Twig\Components\ProgressBar,
+            "ProgressBar" => new \Xtuc\BootstrapTwigBundle\Twig\Components\ProgressBar
         ];
+
+        $this->tokenParsers = [ new Col, new Row, new Container, new Pager ];
+    }
+
+    public function getGlobals()
+    {
+        return $this->components;
     }
 
     public function getTokenParsers()
     {
-        return [ new Col, new Row, new Container, new Pager ];
+        return $this->tokenParsers;
     }
 
     public function getFunctions()
@@ -63,15 +74,14 @@ class BootstrapExtension extends \Twig_Extension
 
     public function progressBar(...$args)
     {
-        $str = ProgressBar::START;
+        $str = "";
+        $container = ProgressBar::renderContainer();
 
         foreach ($args as $progressBar) {
             $str .= $progressBar->render(false);
         }
 
-        $str .= ProgressBar::END;
-
-        return $str;
+        return $container->setContent($str)->compile();
     }
 
     public function strong($value = "")
@@ -102,12 +112,12 @@ class BootstrapExtension extends \Twig_Extension
 
     public function label($content = "")
     {
-        return \Xtuc\BootstrapTwigBundle\Twig\Components\Label::_default($content);
+        return $this->components["Label"]->_default($content);
     }
 
     public function btn($content = "")
     {
-        return \Xtuc\BootstrapTwigBundle\Twig\Components\Btn::_default($content);
+        return $this->components["Btn"]->_default($content);
     }
 
     public function getName()

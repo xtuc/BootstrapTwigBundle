@@ -2,30 +2,18 @@
 
 namespace Xtuc\BootstrapTwigBundle\Twig\Components;
 
-class Alert
+use \Xtuc\BootstrapTwigBundle\Services\AbstractBootstrapDOMNode;
+use \Xtuc\BootstrapTwigBundle\Services\DOMBuilder;
+
+class Alert extends AbstractBootstrapDOMNode
 {
-    public function info($label = "")
+    public function render($content)
     {
-        return $this->render("info", $label);
-    }
-
-    public function success($label = "")
-    {
-        return $this->render("success", $label);
-    }
-
-    public function warning($label = "")
-    {
-        return $this->render("warning", $label);
-    }
-
-    public function danger($label = "")
-    {
-        return $this->render("danger", $label);
-    }
-
-    private function render($type, $content = "")
-    {
-        return sprintf("<div class=\"alert alert-%s\" role=\"alert\">%s</div>", $type, $content);
+        return (new DOMBuilder)
+                            ->setTag(self::DIV)
+                            ->setContent($content)
+                            ->setAttribute("class", "alert alert-" . $this->type)
+                            ->setAttribute("role", "alert")
+                            ->compile();
     }
 }
