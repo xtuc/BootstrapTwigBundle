@@ -1,3 +1,5 @@
+[![No Maintenance Intended](http://unmaintained.tech/badge.svg)](http://unmaintained.tech/)
+
 # Bootstrap Twig Bundle
 
 The bundle requires Bootstrap to be already installed ([download here](https://getbootstrap.com/getting-started/#download)).
