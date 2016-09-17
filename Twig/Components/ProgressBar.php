@@ -40,7 +40,7 @@ class ProgressBar extends AbstractBootstrapDOMNode
         $this->type = $type;
 
         foreach ($args as $arg) {
-            
+
             if ($arg instanceof Now) {
                 $this->valueNow = clone $arg;
             }

@@ -2,28 +2,72 @@
 
 namespace Xtuc\BootstrapTwigBundle\Services;
 
+/**
+ * Class: DOMBuilder
+ *
+ * DOM builder
+ */
 class DOMBuilder
 {
+    /**
+     * HTML tag
+     *
+     * @var string
+     */
     private $tag;
 
+    /**
+     * HTML content
+     *
+     * @var mixed
+     */
     private $content;
 
+    /**
+     * HTML tag attributes
+     *
+     * @var Array
+     */
     private $attributes;
 
+    /**
+     * child DOMNode
+     *
+     * @var Array[DOMNode]
+     */
     private $childrens;
 
+    /**
+     * setTag
+     *
+     * @param mixed $tag
+     * @return DOMBuilder
+     */
     public function setTag($tag)
     {
         $this->tag = $tag;
         return $this;
     }
 
+    /**
+     * setContent
+     *
+     * @param mixed $content
+     * @return DOMBuilder
+     */
     public function setContent($content)
     {
         $this->content = $content;
         return $this;
     }
 
+    /**
+     * setAttribute
+     *
+     * @param mixed $k key
+     * @param mixed $v value
+     * @return DOMBuilder
+     */
     public function setAttribute($k, $v)
     {
         $this->attributes[$k] = $v;
@@ -31,6 +75,12 @@ class DOMBuilder
         return $this;
     }
 
+    /**
+     * addChild
+     *
+     * @param DOMBuilder $builder
+     * @return DOMBuilder
+     */
     public function addChild(DOMBuilder $builder)
     {
         $this->childrens[] = $builder;
@@ -38,6 +88,11 @@ class DOMBuilder
         return $this;
     }
 
+    /**
+     * compile
+     *
+     * @return DOMNode
+     */
     public function compile()
     {
         $attributes = "";

@@ -17,7 +17,7 @@ class Btn extends AbstractBootstrapDOMNode
     public function factory($content, ...$args)
     {
         foreach ($args as $arg) {
-            
+
             if ($arg instanceof Type) {
                 $this->type = clone $arg;
             }
