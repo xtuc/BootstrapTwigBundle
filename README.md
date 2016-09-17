@@ -77,6 +77,8 @@ Offsetting columns, example:
 {% endrow %}
 ```
 
+![Demo grid](.github/demo-grid.png)
+
 ### Buttons
 
 The syntax is {{ Btn.***type***("***text***") }} or {{ Btn("***text***") }} for default. The supported types are: primary, success, info, warning, danger and link.
@@ -106,6 +108,8 @@ Boutton supports link by providing a LinkTo argument, see the following example:
 {{ Alert.danger(Strong("Oh snap!") ~ " Change a few things up and try submitting again.") }}
 ```
 
+![Demo alerts](.github/demo-alerts.png)
+
 ### Pager
 
 ```HTML
@@ -133,6 +137,8 @@ Boutton supports link by providing a LinkTo argument, see the following example:
 ```Handlebar
 {{ Badge(45) }}
  ```
+ 
+![Demo badge](.github/demo-badge.png)
 
 ### Labels
 
@@ -155,8 +161,11 @@ Now value is required.
 {{ ProgressBar.warning(Now(60), Min(0), Max(100)) }}
 {{ ProgressBar.danger(Now(80), Min(0), Max(100)) }}
  ```
+![Demo progressbars](.github/demo-progressbars.png)
  
 Stacked progress bar example:
 ```Handlebar
 {{ ProgressBar( ProgressBar.success(Now(35)), ProgressBar.warning(Now(20)), ProgressBar.danger(Now(10)) ) }}
 ```
+
+![Demo mutiple progressbars](.github/demo-multi-progressbar.png)
